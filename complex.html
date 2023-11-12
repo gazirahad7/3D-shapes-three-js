@@ -69,10 +69,10 @@
 
       PrismGeometry.prototype = Object.create(THREE.ExtrudeGeometry.prototype);
 
-      shapeOne(20);
       // below this function for  control
+      createPrism(20, 0, 0, 10, 0);
 
-      function shapeOne(height) {
+      function createPrism(thickness, length, bottomWidth, topWidth, edge) {
         // camera
         AddCamera(-40, 50, 200);
         scene = new THREE.Scene();
@@ -101,52 +101,17 @@
         // world
 
         // one
-        var A = new THREE.Vector2(0, 0);
+        // var A = new THREE.Vector2(0, 0);
 
-        var B = new THREE.Vector2(60, 0);
+        // var B = new THREE.Vector2(60, 0);
 
-        var C = new THREE.Vector2(45, 15);
+        // var C = new THREE.Vector2(45, 15);
 
-        var D = new THREE.Vector2(30, 30);
+        // var D = new THREE.Vector2(30, 30);
 
-        var E = new THREE.Vector2(15, 30);
+        // var E = new THREE.Vector2(15, 30);
 
-        var F = new THREE.Vector2(0, 15);
-
-        //  user inputs
-        let topWidth = 30; // dX
-        let bottomWidth = 60; // bX
-        let edge = 15; // f
-        let length = 40;
-
-        //
-
-        function vectorFun(bX, dX, eX) {
-          //  reduce variable
-
-          //   if value is same then assign
-
-          let bY = 0;
-          let dY = dX;
-          let cX = dX;
-          let cY = dX;
-          let eY = eX * 2;
-          let fX = 0;
-          let fY = dX / 2;
-
-          let A = new THREE.Vector2(0, 0);
-
-          let B = new THREE.Vector2(bX, bY);
-
-          let C = new THREE.Vector2(cX, cY);
-
-          let D = new THREE.Vector2(dX, dY);
-
-          let E = new THREE.Vector2(eX, eY);
-
-          let F = new THREE.Vector2(fX, fY);
-          return [A, B, C, D, E, F];
-        }
+        // var F = new THREE.Vector2(0, 15);
 
         var material = new THREE.MeshPhongMaterial({
           color: 0x00b2fc,
@@ -154,7 +119,11 @@
           shininess: 20,
         });
 
-        var geometry = new PrismGeometry([A, B, C, D, E, F], height);
+        //   var geometry = new PrismGeometry([A, B, C, D, E, F], height);
+        var geometry = new PrismGeometry(
+          vectorFun(length, -bottomWidth, topWidth, edge),
+          thickness
+        );
 
         var prism2 = new THREE.Mesh(geometry, material);
 
@@ -174,6 +143,28 @@
       }
 
       //
+
+      function vectorFun(length, bottomWidth, topWidth, edge) {
+        let bX = 60;
+        let bY = 0;
+        let dX = 30;
+        let dY = dX;
+        let cX = dX;
+        let cY = dX;
+        let eX = 15;
+        let eY = eX * 2;
+        let fX = 0;
+        let fY = dX / 2;
+
+        let bottomWidthDividedByTwo = bottomWidth / 2;
+        let A = new THREE.Vector2(0, 0);
+        let B = new THREE.Vector2(bX, bY);
+        let C = new THREE.Vector2(cX, cY + length);
+        let D = new THREE.Vector2(dX, dY + length);
+        let E = new THREE.Vector2(eX, eY + length);
+        let F = new THREE.Vector2(fX, fY + edge);
+        return [A, B, C, D, E, F];
+      }
     </script>
   </body>
 </html>
