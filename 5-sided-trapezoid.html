@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>three.js webgl - geometry LatheGeometry</title>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
+    />
+    <meta name="author" content="Vildanov Almaz" />
+    <style>
+      body {
+        color: #000;
+        font-family: Monospace;
+        font-size: 13px;
+        text-align: center;
+        font-weight: bold;
+
+        /* background-color: #fff; */
+        margin: 0px;
+        overflow: hidden;
+      }
+
+      #info {
+        color: #000;
+        position: absolute;
+        top: 0px;
+        width: 100%;
+        padding: 5px;
+      }
+
+      a {
+        color: red;
+      }
+
+      canvas {
+        display: block;
+        width: 550px !important;
+        height: 550px !important;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="container"></div>
+    <script src="js/three.min.js"></script>
+    <script>
+      // Define the PrismGeometry constructor
+      function PrismGeometry(vertices, height) {
+        var Shape = new THREE.Shape();
+
+        (function f(ctx) {
+          ctx.moveTo(vertices[0].x, vertices[0].y);
+          for (var i = 1; i < vertices.length; i++) {
+            ctx.lineTo(vertices[i].x, vertices[i].y);
+          }
+          ctx.lineTo(vertices[0].x, vertices[0].y);
+        })(Shape);
+
+        var settings = {
+          amount: height,
+          bevelEnabled: false,
+        };
+
+        THREE.ExtrudeGeometry.call(this, Shape, settings);
+      }
+
+      PrismGeometry.prototype = Object.create(THREE.ExtrudeGeometry.prototype);
+
+      // Function to create the prism shape
+      function createPrism(thickness, length, bottomWidthIncrease, topWidth) {
+        // Set up scene
+        AddCamera(-40, 50, 200);
+        var scene = new THREE.Scene();
+        setupLights(scene);
+
+        // Set up renderer
+        var renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setClearColor(0xffffff);
+        renderer.setSize(window.innerWidth, window.innerHeight);
+
+        var container = document.getElementById("container");
+        container.appendChild(renderer.domElement);
+
+        window.addEventListener("resize", onWindowResize, false);
+
+        // Set up material
+        var material = new THREE.MeshPhongMaterial({
+          color: 0x00b2fc,
+          specular: 0x00ffff,
+          shininess: 20,
+        });
+
+        // Set up geometry
+        var geometry = new PrismGeometry(
+          vectorInputs(length, -bottomWidthIncrease, topWidth),
+          thickness
+        );
+
+        // Create and add prism to scene
+        var prism = new THREE.Mesh(geometry, material);
+        scene.add(prism);
+
+        // Render the scene
+        renderer.render(scene, camera);
+      }
+
+      // Function to set up lights in the scene
+      function setupLights(scene) {
+        var light = new THREE.DirectionalLight(0xffffff, 1 / 2);
+        light.position.set(0, 300, 500);
+        scene.add(light);
+
+        light = new THREE.DirectionalLight(0xffffff, 1 / 2);
+        light.position.set(-100, 30, 0);
+        scene.add(light);
+      }
+
+      // Function to handle window resize
+      function onWindowResize() {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+      }
+
+      // Function to add camera to the scene
+      function AddCamera(X, Y, Z) {
+        camera = new THREE.PerspectiveCamera();
+        camera.position.set(X, Y, Z);
+      }
+
+      // Function to perform range transformation
+      function rangeFun(input) {
+        return input * 0.1;
+      }
+
+      // Function to generate vector inputs for the prism
+      function vectorInputs(length, bottomWidthIncrease, topWidth) {
+        let bX = 60;
+        let bY = 0;
+        let dX = 30;
+        let dY = dX;
+        let cX = dX;
+        let cY = dX;
+        let eX = dX / 2;
+        let eY = dX;
+
+        //
+
+        let A = new THREE.Vector2(bottomWidthIncrease, 0);
+        let B = new THREE.Vector2(bX, bY);
+        let C = new THREE.Vector2(cX, cY + length);
+        let D = new THREE.Vector2(dX, dY + length);
+        let E = new THREE.Vector2(eX - topWidth, eY + length);
+
+        return [A, B, C, D, E];
+      }
+
+      // Example usage
+      createPrism(30, 0, 0, 0);
+    </script>
+  </body>
+</html>
