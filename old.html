@@ -44,11 +44,20 @@
   <body>
     <div id="container"></div>
 
+    <!-- <script src="../build/three.min.js"></script> -->
     <script src="js/three.min.js"></script>
 
+    <!-- <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.158.0/three.min.js"
+      integrity="sha512-/WaZCC76Yn6MLEoK6b9np9yiLBet/RngBS33X1P0SHuag6j2E0e5rT7jbA2CvXCydN6+FkDYNx8FBM+vkzsthw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script> -->
+
     <script>
-      // Define the PrismGeometry constructor
-      function PrismGeometry(vertices, height) {
+      //   import * as THREE from "https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.module.js";
+
+      PrismGeometry = function (vertices, height) {
         var Shape = new THREE.Shape();
 
         (function f(ctx) {
@@ -59,17 +68,22 @@
           ctx.lineTo(vertices[0].x, vertices[0].y);
         })(Shape);
 
-        var settings = {
-          amount: height,
-          bevelEnabled: false,
-        };
+        var settings = {};
+        settings.amount = height;
+        settings.bevelEnabled = false;
 
         THREE.ExtrudeGeometry.call(this, Shape, settings);
-      }
+      };
 
       PrismGeometry.prototype = Object.create(THREE.ExtrudeGeometry.prototype);
 
-      shapeOne(20);
+      //var container, stats;
+
+      var camera, controls, scene, renderer;
+      var light1;
+      var CircleMirror;
+
+      shapeOne(30);
       // below this function for  control
 
       function shapeOne(height) {
@@ -101,17 +115,17 @@
         // world
 
         // one
-        var A = new THREE.Vector2(0, 0);
+        // var A = new THREE.Vector2(0, 0);
 
-        var B = new THREE.Vector2(90, 0);
+        // var B = new THREE.Vector2(30, 0);
 
-        var C = new THREE.Vector2(45, 15);
+        // var C = new THREE.Vector2(30, 30);
 
-        var D = new THREE.Vector2(30, 30);
+        // var D = new THREE.Vector2(30, 30);
 
-        var E = new THREE.Vector2(15, 30);
+        // var E = new THREE.Vector2(15, 30);
 
-        var F = new THREE.Vector2(0, 15);
+        // var F = new THREE.Vector2(0, 15);
 
         //  user inputs
         let topWidth = 30; // dX
@@ -148,8 +162,6 @@
 
           let F = new THREE.Vector2(fX, fY);
 
-          console.log(F);
-
           return [A, B, C, D, E, F];
         }
 
@@ -159,11 +171,11 @@
           shininess: 20,
         });
 
-        // var geometry = new PrismGeometry(
-        //   vectorFun(bottomWidth, topWidth, edge),
-        //   height
-        // );
-        var geometry = new PrismGeometry([A, B, C, D, E, F], height);
+        var geometry = new PrismGeometry(
+          vectorFun(bottomWidth, topWidth, edge),
+          height
+        );
+        // var geometry = new PrismGeometry([A, B, C, D, E, F], height);
 
         var prism2 = new THREE.Mesh(geometry, material);
 
