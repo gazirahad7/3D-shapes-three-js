@@ -103,7 +103,7 @@
         // one
         var A = new THREE.Vector2(0, 0);
 
-        var B = new THREE.Vector2(90, 0);
+        var B = new THREE.Vector2(60, 0);
 
         var C = new THREE.Vector2(45, 15);
 
@@ -115,14 +115,12 @@
 
         //  user inputs
         let topWidth = 30; // dX
-        let bottomWidth = 30; // bX
+        let bottomWidth = 60; // bX
         let edge = 15; // f
         let length = 40;
 
         //
-        function rangeFun(input) {
-          return input * 0.1;
-        }
+
         function vectorFun(bX, dX, eX) {
           //  reduce variable
 
@@ -147,9 +145,6 @@
           let E = new THREE.Vector2(eX, eY);
 
           let F = new THREE.Vector2(fX, fY);
-
-          console.log(F);
-
           return [A, B, C, D, E, F];
         }
 
@@ -159,23 +154,11 @@
           shininess: 20,
         });
 
-        // var geometry = new PrismGeometry(
-        //   vectorFun(bottomWidth, topWidth, edge),
-        //   height
-        // );
         var geometry = new PrismGeometry([A, B, C, D, E, F], height);
 
         var prism2 = new THREE.Mesh(geometry, material);
 
         scene.add(prism2);
-
-        var material = new THREE.MeshPhongMaterial({
-          color: 0x00b2fc,
-          specular: 0x00ffff,
-          shininess: 20,
-          transparent: true,
-          opacity: 0.7,
-        });
       }
 
       function onWindowResize() {
