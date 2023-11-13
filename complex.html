@@ -37,6 +37,7 @@
         display: block;
         width: 550px !important;
         height: 550px !important;
+        border: 2px solid;
       }
     </style>
   </head>
@@ -70,11 +71,12 @@
       PrismGeometry.prototype = Object.create(THREE.ExtrudeGeometry.prototype);
 
       // below this function for  control
-      createPrism(20, 0, 0, 10, 0);
+      createPrism(20, 0, 0, 0, 0);
 
       function createPrism(thickness, length, bottomWidth, topWidth, edge) {
         // camera
         AddCamera(-40, 50, 200);
+
         scene = new THREE.Scene();
 
         // lights
@@ -139,27 +141,34 @@
       renderer.render(scene, camera);
       function AddCamera(X, Y, Z) {
         camera = new THREE.PerspectiveCamera();
-        camera.position.set(X, Y, Z);
+        camera.position.set(-10, 25, 100);
+        camera.rotation.x = -0.2;
+        camera.rotation.y = -0.3;
+        camera.rotation.z = -0.04;
       }
 
       //
 
       function vectorFun(length, bottomWidth, topWidth, edge) {
-        let bX = 60;
+        let bX = 30;
         let bY = 0;
-        let dX = 30;
-        let dY = dX;
-        let cX = dX;
-        let cY = dX;
-        let eX = 15;
-        let eY = eX * 2;
+
+        let cX = 30;
+        let cY = 8.5;
+
+        let dX = 22;
+        let dY = 15;
+
+        let eX = 8;
+        let eY = 15;
+
         let fX = 0;
-        let fY = dX / 2;
+        let fY = 8.5;
 
         let bottomWidthDividedByTwo = bottomWidth / 2;
         let A = new THREE.Vector2(0, 0);
         let B = new THREE.Vector2(bX, bY);
-        let C = new THREE.Vector2(cX, cY + length);
+        let C = new THREE.Vector2(cX, cY);
         let D = new THREE.Vector2(dX, dY + length);
         let E = new THREE.Vector2(eX, eY + length);
         let F = new THREE.Vector2(fX, fY + edge);
