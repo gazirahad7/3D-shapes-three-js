@@ -69,7 +69,14 @@
       PrismGeometry.prototype = Object.create(THREE.ExtrudeGeometry.prototype);
 
       // Function to create the prism shape
-      function createPrism(thickness, length, bottomWidthIncrease, topWidth) {
+      function createPrism(
+        thickness,
+        length,
+        bottomWidthIncrease,
+        topWidth,
+        topEdge,
+        leftEdge
+      ) {
         // Set up scene
         //        camera.position.set(-10, 25, 100);
 
@@ -97,7 +104,13 @@
 
         // Set up geometry
         var geometry = new PrismGeometry(
-          vectorInputs(length, -bottomWidthIncrease, topWidth),
+          vectorInputs(
+            length,
+            -bottomWidthIncrease,
+            topWidth,
+            topEdge,
+            leftEdge
+          ),
           thickness
         );
 
@@ -143,37 +156,41 @@
       }
 
       // Function to generate vector inputs for the prism
-      function vectorInputs(length, bottomWidthIncrease, topWidth) {
+      function vectorInputs(
+        length,
+        bottomWidthIncrease,
+        topWidth,
+        topEdge,
+        leftEdge
+      ) {
         let bX = 30;
         let bY = 0;
 
         let cX = 30;
-        let cY = 0;
+        let cY = 20;
 
         let dX = 20;
-        let dY = 15;
+        let dY = 35;
 
         let eX = 15 / 2;
-        let eY = 15;
-
-        let fX = 0;
-        let fY = 0;
+        let eY = 35;
 
         //
 
-        let A = new THREE.Vector2(0, 0);
+        let A = new THREE.Vector2(bottomWidthIncrease, 0);
         let B = new THREE.Vector2(bX, bY);
-        let C = new THREE.Vector2(cX, cY + 20);
-        let D = new THREE.Vector2(dX, dY + 20);
-        let E = new THREE.Vector2(eX - topWidth, eY + 20);
+        let C = new THREE.Vector2(cX, cY + length + leftEdge);
+        let D = new THREE.Vector2(dX + topEdge, dY + length);
+        let E = new THREE.Vector2(
+          eX + bottomWidthIncrease - topWidth,
+          eY + length
+        );
 
-        let F = new THREE.Vector2(fX, fY);
-
-        return [A, B, C, D, E, F];
+        return [A, B, C, D, E];
       }
 
       // Example usage
-      createPrism(30, 0, 0, 0);
+      createPrism(30, 0, 0, 0, 0, 0);
     </script>
   </body>
 </html>
