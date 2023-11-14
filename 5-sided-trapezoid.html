@@ -37,6 +37,7 @@
         display: block;
         width: 550px !important;
         height: 550px !important;
+        border: 1px solid #000;
       }
     </style>
   </head>
@@ -70,7 +71,10 @@
       // Function to create the prism shape
       function createPrism(thickness, length, bottomWidthIncrease, topWidth) {
         // Set up scene
-        AddCamera(-40, 50, 200);
+        //        camera.position.set(-10, 25, 100);
+
+        AddCamera(-20, 50, 200);
+        //AddCamera(40, 25, 200);
         var scene = new THREE.Scene();
         setupLights(scene);
 
@@ -127,6 +131,10 @@
       function AddCamera(X, Y, Z) {
         camera = new THREE.PerspectiveCamera();
         camera.position.set(X, Y, Z);
+
+        camera.rotation.x = -0.2;
+        camera.rotation.y = -0.4;
+        camera.rotation.z = -0.04;
       }
 
       // Function to perform range transformation
@@ -136,24 +144,32 @@
 
       // Function to generate vector inputs for the prism
       function vectorInputs(length, bottomWidthIncrease, topWidth) {
-        let bX = 60;
+        let bX = 30;
         let bY = 0;
-        let dX = 30;
-        let dY = dX;
-        let cX = dX;
-        let cY = dX;
-        let eX = dX / 2;
-        let eY = dX;
+
+        let cX = 30;
+        let cY = 0;
+
+        let dX = 20;
+        let dY = 15;
+
+        let eX = 15 / 2;
+        let eY = 15;
+
+        let fX = 0;
+        let fY = 0;
 
         //
 
-        let A = new THREE.Vector2(bottomWidthIncrease, 0);
+        let A = new THREE.Vector2(0, 0);
         let B = new THREE.Vector2(bX, bY);
-        let C = new THREE.Vector2(cX, cY + length);
-        let D = new THREE.Vector2(dX, dY + length);
-        let E = new THREE.Vector2(eX - topWidth, eY + length);
+        let C = new THREE.Vector2(cX, cY + 20);
+        let D = new THREE.Vector2(dX, dY + 20);
+        let E = new THREE.Vector2(eX - topWidth, eY + 20);
 
-        return [A, B, C, D, E];
+        let F = new THREE.Vector2(fX, fY);
+
+        return [A, B, C, D, E, F];
       }
 
       // Example usage
