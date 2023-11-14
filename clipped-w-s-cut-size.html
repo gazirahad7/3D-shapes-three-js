@@ -100,21 +100,6 @@
 
         window.addEventListener("resize", onWindowResize, false);
 
-        // world
-
-        // one
-        // var A = new THREE.Vector2(0, 0);
-
-        // var B = new THREE.Vector2(60, 0);
-
-        // var C = new THREE.Vector2(45, 15);
-
-        // var D = new THREE.Vector2(30, 30);
-
-        // var E = new THREE.Vector2(15, 30);
-
-        // var F = new THREE.Vector2(0, 15);
-
         var material = new THREE.MeshPhongMaterial({
           color: 0x00b2fc,
           specular: 0x00ffff,
@@ -123,7 +108,7 @@
 
         //   var geometry = new PrismGeometry([A, B, C, D, E, F], height);
         var geometry = new PrismGeometry(
-          vectorFun(length, -bottomWidth, topWidth, edge),
+          vectorFun(length, bottomWidth, topWidth, edge),
           thickness
         );
 
@@ -154,24 +139,25 @@
         let bY = 0;
 
         let cX = 30;
-        let cY = 8.5;
+        let cY = 7.5;
 
         let dX = 22;
         let dY = 15;
 
-        let eX = 8;
+        let eX = 7.5;
         let eY = 15;
 
         let fX = 0;
-        let fY = 8.5;
+        let fY = 7.5;
 
         let bottomWidthDividedByTwo = bottomWidth / 2;
-        let A = new THREE.Vector2(0, 0);
-        let B = new THREE.Vector2(bX, bY);
-        let C = new THREE.Vector2(cX, cY);
-        let D = new THREE.Vector2(dX, dY + length);
-        let E = new THREE.Vector2(eX, eY + length);
-        let F = new THREE.Vector2(fX, fY + edge);
+        let topWidthDividedByTwo = topWidth / 2;
+        let A = new THREE.Vector2(-bottomWidthDividedByTwo, 0);
+        let B = new THREE.Vector2(bX + bottomWidthDividedByTwo, bY);
+        let C = new THREE.Vector2(cX + bottomWidthDividedByTwo, cY + edge);
+        let D = new THREE.Vector2(dX + topWidthDividedByTwo, dY + length);
+        let E = new THREE.Vector2(eX - topWidthDividedByTwo, eY + length);
+        let F = new THREE.Vector2(fX - bottomWidthDividedByTwo, fY + edge);
         return [A, B, C, D, E, F];
       }
     </script>
