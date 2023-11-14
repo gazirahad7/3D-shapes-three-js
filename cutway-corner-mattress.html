@@ -99,7 +99,7 @@
 
         // Set up geometry
         var geometry = new PrismGeometry(
-          vectorInputs(length, -bottomWidthIncrease, topWidth, edge),
+          vectorInputs(length, bottomWidthIncrease, topWidth, edge),
           thickness
         );
 
@@ -141,7 +141,7 @@
       }
 
       // Function to generate vector inputs for the prism
-      function vectorInputs(length, aX, topWidth, edge) {
+      function vectorInputs(length, bottomWidthIncrease, topWidth, edge) {
         let bX = 30;
         let bY = 0;
         let dX = 30;
@@ -155,15 +155,35 @@
 
         //
 
-        let A = new THREE.Vector2(aX, 0);
+        let A = new THREE.Vector2(-bottomWidthIncrease, 0);
         let B = new THREE.Vector2(bX, bY);
         let C = new THREE.Vector2(cX, cY + length);
         let D = new THREE.Vector2(dX, dY + length);
         let E = new THREE.Vector2(eX - topWidth, eY + length);
-        let F = new THREE.Vector2(fX + aX, fY + edge);
+        let F = new THREE.Vector2(fX - bottomWidthIncrease, fY + edge);
 
         return [A, B, C, D, E, F];
       }
+
+      // var length = getInchValue($("#length").val() || 0);
+      // var bottomWidthIncrease = getInchValue($("#bottom_width").val() || 0);
+      // var topWidth = getInchValue($("#top_width").val() || 0);
+      // var edge = getInchValue($("#edge").val() || 0);
+      // var thickness = getInchValue($("#thickness").val() || 30);
+
+      var length = $("#length").val() || 0;
+      var bottomWidthIncrease = $("#bottom_width").val() || 0;
+      var topWidth = $("#top_width").val() || 0;
+      var edge = $("#edge").val() || 0;
+      var thickness = $("#thickness").val() || 30;
+
+      console.log({ length, bottomWidthIncrease, topWidth, edge, thickness });
+
+      var length = 0;
+      var bottomWidthIncrease = 0;
+      var topWidth = 0;
+      var edge = 0;
+      var thickness = 0;
 
       // Example usage
       createPrism(30, 0, 0, 0, 0);
