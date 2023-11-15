@@ -158,27 +158,27 @@
         let cX = length - getIncreaseLength;
         let cY = length;
 
-        let eX = topWidth - getIncreaseTopWidth;
-        let eY = eX * 2;
+        let dX = topWidth - getIncreaseTopWidth;
+        let dY = dX * 2;
 
-        let fX = 0;
-        let fY = edge;
+        let eX = 0;
+        let eY = edge;
 
         let A = new THREE.Vector2(-bottomWidthIncrease + defaultWidth, 0);
         let B = new THREE.Vector2(bX, bY);
         let C = new THREE.Vector2(cX, cY);
-        let E = new THREE.Vector2(
-          eX - getIncreaseTopWidth,
-          eY + getIncreaseLength
+        let D = new THREE.Vector2(
+          dX - getIncreaseTopWidth,
+          dY + getIncreaseLength
         );
-        let F = new THREE.Vector2(-bottomWidthIncrease + defaultWidth, fY);
+        let E = new THREE.Vector2(-bottomWidthIncrease + defaultWidth, eY);
 
-        console.log({ A, B, C, E, F });
+        console.log({ A, B, C, D, E });
 
-        return [A, B, C, E, F];
+        return [A, B, C, D, E];
       }
       // success full  code
-      createPrism(10, 6, 6, 3, 3);
+      createPrism(4, 6, 6, 3, 3);
     </script>
   </body>
 </html>
