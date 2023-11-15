@@ -21,22 +21,11 @@
         overflow: hidden;
       }
 
-      #info {
-        color: #000;
-        position: absolute;
-        top: 0px;
-        width: 100%;
-        padding: 5px;
-      }
-
-      a {
-        color: red;
-      }
-
       canvas {
         display: block;
         width: 550px !important;
         height: 550px !important;
+        border: 1px solid #000;
       }
     </style>
   </head>
@@ -72,7 +61,7 @@
       // Main function for creating the prism shape
       function createPrism(thickness, width) {
         // Set up camera and scene
-        AddCamera(-40, 50, 200);
+        AddCamera(-10, 40, 200);
         var scene = new THREE.Scene();
         setupLights(scene);
 
@@ -125,30 +114,39 @@
       function AddCamera(X, Y, Z) {
         camera = new THREE.PerspectiveCamera();
         camera.position.set(X, Y, Z);
+
+        camera.rotation.x = -0.2;
+        camera.rotation.y = -0.3;
+        camera.rotation.z = -0.04;
       }
 
       // Function to generate vector inputs for the prism
       function vectorFun(width) {
-        let bX;
-        let cX;
-        let cY;
+        //
 
-        if (width == 0) {
-          bX = 30;
-          bY = 30;
-          cX = 15; //  length
-          cY = 30;
-        }
+        let defaultWidth = 30;
+        //
+        let bX = width;
+
+        let cX = width / 2;
+        let cY = width;
+
+        // if (width == 0) {
+        //   bX = 30;
+        //   bY = 0;
+        //   cX = 15; //  length
+        //   cY = 30;
+        // }
 
         let A = new THREE.Vector2(0, 0);
-        let B = new THREE.Vector2(bX || width, 0);
-        let C = new THREE.Vector2(cX || width / 2, cY || width);
+        let B = new THREE.Vector2(bX, 0);
+        let C = new THREE.Vector2(cX, cY);
 
         return [A, B, C];
       }
 
       // Example usage
-      createPrism(30, 40);
+      createPrism(20, 30);
     </script>
   </body>
 </html>
