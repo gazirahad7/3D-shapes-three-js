@@ -131,13 +131,25 @@
 
       // Function to set up lights in the scene
       function setupLights(scene) {
-        var light = new THREE.DirectionalLight(0xffffff, 1 / 2);
-        light.position.set(0, 300, 500);
-        scene.add(light);
+        // Light 1
+        var light1 = new THREE.DirectionalLight(0xffffff, 1 / 2);
+        light1.position.set(0, 300, 500);
+        scene.add(light1);
 
-        light = new THREE.DirectionalLight(0xffffff, 1 / 2);
-        light.position.set(-100, 30, 0);
-        scene.add(light);
+        // Light 2
+        var light2 = new THREE.DirectionalLight(0xffffff, 1 / 2);
+        light2.position.set(-100, 30, 0);
+        scene.add(light2);
+
+        // Light 3
+        var light3 = new THREE.DirectionalLight(0xffffff, 1 / 2);
+        light3.position.set(100, -30, 0);
+        scene.add(light3);
+
+        // Light 4
+        var light4 = new THREE.DirectionalLight(0xffffff, 1 / 2);
+        light4.position.set(0, -100, -500);
+        scene.add(light4);
       }
 
       // Function to handle window resize
