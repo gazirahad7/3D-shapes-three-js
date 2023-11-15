@@ -136,12 +136,17 @@
       // Function to generate vector inputs for the prism
       function vectorInputs(length, bottomWidthIncrease, topWidth, edge) {
         // get default values form admin
+        // let defaultLength = 30;
+        // let defaultWidth = 30;
+        // let defaultTopWidth = 15;
+        let defaultLength = 6;
+        let defaultWidth = 6;
+        let defaultTopWidth = 3;
 
-        let defaultLength = 30;
-        let defaultWidth = 30;
-        let defaultTopWidth = 15;
-
-        let getIncreaseWidthVal = defaultWidth - bottomWidthIncrease;
+        let getIncreaseWidthVal = Math.max(
+          0,
+          bottomWidthIncrease - defaultWidth
+        );
         let getIncreaseLength = Math.max(0, length - defaultLength);
         let getIncreaseTopWidth = Math.max(0, topWidth - defaultTopWidth);
 
@@ -153,7 +158,7 @@
 
         //  vectors
         //let bX = bottomWidthIncrease - getIncreaseWidthVal;
-        let bX = bottomWidthIncrease;
+        let bX = bottomWidthIncrease - getIncreaseWidthVal;
         let bY = 0;
 
         // let dX = 30;
@@ -170,10 +175,7 @@
         let fX = 0;
         let fY = edge;
 
-        let A = new THREE.Vector2(
-          -bottomWidthIncrease - bottomWidthIncrease + getIncreaseWidthVal,
-          0
-        );
+        let A = new THREE.Vector2(-bottomWidthIncrease + defaultWidth, 0);
         let B = new THREE.Vector2(bX, bY);
         let C = new THREE.Vector2(cX, cY);
         // let D = new THREE.Vector2(dX, dY + getIncreaseLength);
@@ -181,10 +183,7 @@
           eX - getIncreaseTopWidth,
           eY + getIncreaseLength
         );
-        let F = new THREE.Vector2(
-          -bottomWidthIncrease - bottomWidthIncrease + getIncreaseWidthVal,
-          fY
-        );
+        let F = new THREE.Vector2(-bottomWidthIncrease + defaultWidth, fY);
 
         // let A = new THREE.Vector2(0, 0);
         // let B = new THREE.Vector2(6, 0);
@@ -201,8 +200,8 @@
       //let test = document.querySelector("#thickness").defaultValue;
       //console.log({ test });
       // Example usage
-      //createPrism(10, 10, 10, 5, 5);
-      createPrism(10, 6, 12, 3, 3);
+      // createPrism(20, 30, 30, 15, 15);
+      createPrism(10, 6, 6, 3, 3);
     </script>
   </body>
 </html>
