@@ -72,7 +72,7 @@
       // Main function for creating the prism shape
       function createPrism(thickness, length, width, edge) {
         // Set up camera and scene
-        AddCamera(-40, 50, 200);
+        AddCamera(-25, 40, 150);
         var scene = new THREE.Scene();
         setupLights(scene);
 
@@ -95,7 +95,7 @@
 
         // Create prism geometry
         var geometry = new PrismGeometry(
-          vectorFun(length, -width, edge),
+          vectorFun(length, width, edge),
           thickness
         );
         var prism = new THREE.Mesh(geometry, material);
@@ -128,30 +128,42 @@
       function AddCamera(X, Y, Z) {
         camera = new THREE.PerspectiveCamera();
         camera.position.set(X, Y, Z);
+
+        camera.rotation.x = -0.2;
+        camera.rotation.y = -0.3;
+        camera.rotation.z = -0.04;
       }
 
       // Function to generate vector inputs for the prism
       function vectorFun(length, width, edge) {
-        let bX = 30;
+        //
+
+        let defaultLength = 30;
+        let defaultWidth = 30;
+
+        let getIncreaseWidthVal = width - defaultWidth;
+
+        let getIncreaseLength = length - defaultLength;
+        //
+        let bX = width - getIncreaseWidthVal;
         let bY = 0;
-        let dX = 30;
-        let dY = dX;
-        let cX = dX; //  length
-        let cY = dX;
-        let eX = 0;
-        let eY = dX / 2;
 
-        let A = new THREE.Vector2(width, 0);
+        let cX = length - getIncreaseLength; //  length
+        let cY = length;
+
+        let dX = 0;
+        let dY = edge;
+
+        let A = new THREE.Vector2(-width + defaultWidth, 0);
         let B = new THREE.Vector2(bX, bY);
-        let C = new THREE.Vector2(cX, cY + length);
-        let D = new THREE.Vector2(dX, dY + length);
-        let E = new THREE.Vector2(eX + width, eY + length + edge);
+        let C = new THREE.Vector2(cX, cY);
+        let D = new THREE.Vector2(-width + defaultWidth, dY);
 
-        return [A, B, C, D, E];
+        return [A, B, C, D];
       }
 
       // Example usage
-      createPrism(20, 0, 0, 0);
+      createPrism(20, 30, 30, 15);
     </script>
   </body>
 </html>
