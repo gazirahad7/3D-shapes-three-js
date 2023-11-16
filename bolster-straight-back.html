@@ -68,9 +68,9 @@
       PrismGeometry.prototype = Object.create(THREE.ExtrudeGeometry.prototype);
 
       // Function to create the prism shape
-      function createPrism(thickness, length, bottomWidthIncrease, topWidth) {
+      function createPrism(thickness, length, width, topWidth) {
         // Set up scene
-        AddCamera(-40, 50, 200);
+        AddCamera(-25, 40, 150);
         var scene = new THREE.Scene();
         setupLights(scene);
 
@@ -93,7 +93,7 @@
 
         // Set up geometry
         var geometry = new PrismGeometry(
-          vectorInputs(length, -bottomWidthIncrease, topWidth),
+          vectorInputs(length, width, topWidth),
           thickness
         );
 
@@ -127,6 +127,10 @@
       function AddCamera(X, Y, Z) {
         camera = new THREE.PerspectiveCamera();
         camera.position.set(X, Y, Z);
+
+        camera.rotation.x = -0.2;
+        camera.rotation.y = -0.3;
+        camera.rotation.z = -0.04;
       }
 
       // Function to perform range transformation
@@ -135,29 +139,45 @@
       }
 
       // Function to generate vector inputs for the prism
-      function vectorInputs(length, bottomWidthIncrease, topWidth) {
-        let bX = 30;
+      function vectorInputs(length, bottomWidth, topWidth) {
+        //
+
+        let defaultLength = 30;
+        let defaultWidth = 30;
+        let defaultTopWidth = 15;
+
+        let getIncreaseWidthVal = bottomWidth - defaultWidth;
+
+        let getIncreaseLength = length - defaultLength;
+        let getIncreaseTopWidth = topWidth - defaultTopWidth;
+
+        //
+        let bX = bottomWidth - getIncreaseWidthVal;
         let bY = 0;
-        let dX = 30;
-        let dY = dX;
-        let cX = dX;
-        let cY = dX;
-        let eX = dX / 2;
-        let eY = dX;
+
+        let cX = length - getIncreaseLength;
+        let cY = length;
+
+        let dX = topWidth - getIncreaseTopWidth;
+        let dY = bottomWidth - getIncreaseWidthVal;
 
         //
 
-        let A = new THREE.Vector2(bottomWidthIncrease, 0);
+        let A = new THREE.Vector2(-bottomWidth + defaultWidth, 0);
         let B = new THREE.Vector2(bX, bY);
-        let C = new THREE.Vector2(cX, cY + length);
-        let D = new THREE.Vector2(dX, dY + length);
-        let E = new THREE.Vector2(eX - topWidth, eY + length);
+        let C = new THREE.Vector2(cX, cY);
+        let D = new THREE.Vector2(
+          dX - getIncreaseTopWidth,
+          dY + getIncreaseLength
+        );
 
-        return [A, B, C, D, E];
+        console.log({ A, B, C, D });
+
+        return [A, B, C, D];
       }
 
       // Example usage
-      createPrism(30, 0, 0, 0);
+      createPrism(10, 40, 40, 20);
     </script>
   </body>
 </html>
