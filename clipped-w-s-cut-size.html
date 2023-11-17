@@ -71,7 +71,7 @@
       PrismGeometry.prototype = Object.create(THREE.ExtrudeGeometry.prototype);
 
       // below this function for  control
-      createPrism(20, 0, 0, 0, 0);
+      createPrism(20, 15, 0, 0, 0);
 
       function createPrism(thickness, length, bottomWidth, topWidth, edge) {
         // camera
@@ -135,6 +135,15 @@
       //
 
       function vectorFun(length, bottomWidth, topWidth, edge) {
+        // get default values
+
+        let defaultLength = 30;
+        let defaultWidth = 30;
+        let defaultTopWidth = 15;
+
+        let getIncreaseLength = length - defaultLength;
+
+        //
         let bX = 30;
         let bY = 0;
 
@@ -142,22 +151,26 @@
         let cY = 7.5;
 
         let dX = 22;
-        let dY = 15;
+        let dY = length;
 
         let eX = 7.5;
-        let eY = 15;
+        let eY = length;
 
         let fX = 0;
         let fY = 7.5;
 
         let bottomWidthDividedByTwo = bottomWidth / 2;
         let topWidthDividedByTwo = topWidth / 2;
+
         let A = new THREE.Vector2(-bottomWidthDividedByTwo, 0);
         let B = new THREE.Vector2(bX + bottomWidthDividedByTwo, bY);
         let C = new THREE.Vector2(cX + bottomWidthDividedByTwo, cY + edge);
-        let D = new THREE.Vector2(dX + topWidthDividedByTwo, dY + length);
-        let E = new THREE.Vector2(eX - topWidthDividedByTwo, eY + length);
+        let D = new THREE.Vector2(dX + topWidthDividedByTwo, dY);
+        let E = new THREE.Vector2(eX - topWidthDividedByTwo, eY);
         let F = new THREE.Vector2(fX - bottomWidthDividedByTwo, fY + edge);
+
+        console.log({ A, B, C, D, E, F });
+
         return [A, B, C, D, E, F];
       }
     </script>
