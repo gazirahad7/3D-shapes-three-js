@@ -71,7 +71,7 @@
       PrismGeometry.prototype = Object.create(THREE.ExtrudeGeometry.prototype);
 
       // below this function for  control
-      createPrism(20, 15, 0, 0, 0);
+      createPrism(12, 15, 30, 20, 6);
 
       function createPrism(thickness, length, bottomWidth, topWidth, edge) {
         // camera
@@ -139,35 +139,44 @@
 
         let defaultLength = 30;
         let defaultWidth = 30;
-        let defaultTopWidth = 15;
+        let defaultTopWidth = 22;
+        let defaultEdge = 7.5;
 
         let getIncreaseLength = length - defaultLength;
+        let getIncreaseTopWidth = topWidth - defaultTopWidth;
+        let getIncreaseWidthVal = bottomWidth - defaultWidth;
+
+        let getIncreaseEdge = edge - defaultEdge;
 
         //
-        let bX = 30;
+
+        let bottomWidthDividedByTwo = bottomWidth / 2;
+
+        //
+        let bX = bottomWidth;
         let bY = 0;
 
         let cX = 30;
-        let cY = 7.5;
+        let cY = edge || defaultWidth / 2 / 2;
 
-        let dX = 22;
+        let dX = topWidth || defaultTopWidth;
         let dY = length;
 
-        let eX = 7.5;
+        let eX = edge || defaultWidth / 2 / 2;
         let eY = length;
 
         let fX = 0;
-        let fY = 7.5;
+        let fY = edge || defaultWidth / 2 / 2;
 
-        let bottomWidthDividedByTwo = bottomWidth / 2;
-        let topWidthDividedByTwo = topWidth / 2;
-
-        let A = new THREE.Vector2(-bottomWidthDividedByTwo, 0);
-        let B = new THREE.Vector2(bX + bottomWidthDividedByTwo, bY);
-        let C = new THREE.Vector2(cX + bottomWidthDividedByTwo, cY + edge);
-        let D = new THREE.Vector2(dX + topWidthDividedByTwo, dY);
-        let E = new THREE.Vector2(eX - topWidthDividedByTwo, eY);
-        let F = new THREE.Vector2(fX - bottomWidthDividedByTwo, fY + edge);
+        let A = new THREE.Vector2(-getIncreaseWidthVal / 2, 0);
+        let B = new THREE.Vector2(bX - getIncreaseWidthVal / 2, bY);
+        let C = new THREE.Vector2(cX + getIncreaseWidthVal / 2, cY);
+        let D = new THREE.Vector2(dX - getIncreaseTopWidth / 2, dY);
+        let E = new THREE.Vector2(
+          eX - getIncreaseTopWidth / 2 - getIncreaseEdge / 2,
+          eY
+        );
+        let F = new THREE.Vector2(-getIncreaseWidthVal / 2, fY);
 
         console.log({ A, B, C, D, E, F });
 
