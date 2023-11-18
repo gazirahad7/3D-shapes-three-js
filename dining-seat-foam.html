@@ -185,5 +185,171 @@
       // Example usage
       createPrism(30, 30, 30, 10);
     </script>
+
+    <script>
+      function box() {
+        let bottomWidth = $("#bottom_width").val() || 30;
+        let length = $("#length").val() || 30;
+        let thickness = $("#thickness").val() || 30;
+        let topWidth = $("#top_width").val() || 15;
+
+        createPrism(thickness, length, bottomWidth, topWidth);
+      }
+
+      // Define the PrismGeometry constructor
+      function PrismGeometry(vertices, height) {
+        var Shape = new THREE.Shape();
+
+        (function f(ctx) {
+          ctx.moveTo(vertices[0].x, vertices[0].y);
+          for (var i = 1; i < vertices.length; i++) {
+            ctx.lineTo(vertices[i].x, vertices[i].y);
+          }
+          ctx.lineTo(vertices[0].x, vertices[0].y);
+        })(Shape);
+
+        var settings = {
+          amount: height,
+          bevelEnabled: false,
+        };
+
+        THREE.ExtrudeGeometry.call(this, Shape, settings);
+      }
+
+      PrismGeometry.prototype = Object.create(THREE.ExtrudeGeometry.prototype);
+
+      // Function to create the prism shape
+      function createPrism(thickness, length, bottomWidth, topWidth) {
+        // Set up scene
+        var camera = new THREE.PerspectiveCamera();
+        camera.position.set(-25, 40, 150);
+        // roation
+        camera.rotation.x = -0.2;
+        camera.rotation.y = -0.3;
+        camera.rotation.z = -0.04;
+        var scene = new THREE.Scene();
+        setupLights(scene);
+
+        // Set up renderer
+        var renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setClearColor(0xffffff);
+        renderer.setSize(window.innerWidth, window.innerHeight);
+
+        document.querySelector(".product-preview").innerHTML = "";
+        document
+          .querySelector(".product-preview")
+          .appendChild(renderer.domElement);
+
+        //  window.addEventListener("resize", onWindowResize, false);
+
+        var xColor = $('input[name="color"]:checked').val();
+        if (xColor == "blue") {
+          xColor = 0x00b2fc;
+        } else if (xColor == "yellow") {
+          xColor = 0xffd500;
+        }
+
+        if (!xColor) {
+          xColor = 0x00b2fc;
+        }
+
+        // Set up material
+        var material = new THREE.MeshPhongMaterial({
+          color: xColor,
+          specular: xColor,
+          shininess: 20,
+        });
+
+        // Set up geometry
+        var geometry = new PrismGeometry(
+          vectorInputs(length, bottomWidth, topWidth),
+          thickness
+        );
+
+        // Create and add prism to scene
+        var prism = new THREE.Mesh(geometry, material);
+        scene.add(prism);
+
+        // Render the scene
+        renderer.render(scene, camera);
+      }
+
+      // Function to set up lights in the scene
+      function setupLights(scene) {
+        var light = new THREE.DirectionalLight(0xffffff, 1);
+        light.position.set(50, 500, 600);
+        scene.add(light);
+
+        light = new THREE.DirectionalLight(0xffffff, 1);
+        light.position.set(-100, 0, 0);
+        scene.add(light);
+      }
+
+      // Function to handle window resize
+      function onWindowResize() {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+      }
+
+      // Function to add camera to the scene
+      function AddCamera(X, Y, Z) {
+        camera = new THREE.PerspectiveCamera();
+        camera.position.set(X, Y, Z);
+      }
+
+      // Function to perform range transformation
+      function rangeFun(input) {
+        return input * 0.1;
+      }
+
+      // Function to generate vector inputs for the prism
+      function vectorInputs(length, bottomWidth, topWidth) {
+        let defaultWidth = Number(
+          document.querySelector("#bottom_width").defaultValue
+        );
+        let defaultLength = Number(
+          document.querySelector("#length").defaultValue
+        );
+        let defaultTopWidth = Number(
+          document.querySelector("#top_width").defaultValue
+        );
+        let getIncreaseWidthVal = bottomWidth - defaultWidth;
+
+        let getIncreaseLength = length - defaultLength;
+        let getIncreaseTopWidth = topWidth - defaultTopWidth;
+
+        //
+        let bX = bottomWidth - topWidth / 2;
+        let bY = 0;
+
+        let cX = length - getIncreaseLength + getIncreaseTopWidth;
+        let cY = length;
+
+        let dX = topWidth / 2 - getIncreaseTopWidth;
+        let dY = bottomWidth - getIncreaseWidthVal;
+
+        //
+
+        let A = new THREE.Vector2(
+          -bottomWidth + defaultWidth - bottomWidth / 2,
+          0
+        );
+
+        let B = new THREE.Vector2(
+          bX + bottomWidth / 2 - getIncreaseWidthVal / 2,
+          bY
+        );
+        let C = new THREE.Vector2(cX, cY);
+        let D = new THREE.Vector2(
+          dX - getIncreaseTopWidth - bottomWidth / 2,
+          dY + getIncreaseLength
+        );
+
+        console.log({ A, B, C, D });
+
+        return [A, B, C, D];
+      }
+    </script>
   </body>
 </html>
