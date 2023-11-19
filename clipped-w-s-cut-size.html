@@ -135,9 +135,9 @@
       }
 
       //
-      let defaultTopWidthValue = Number(
-        document.querySelector("#top_width").defaultValue
-      );
+      // let defaultTopWidthValue = Number(
+      //   document.querySelector("#top_width").defaultValue
+      // );
       function validationTopWidthAndEdge(
         bottomWidth,
         topWidth,
@@ -152,18 +152,22 @@
 
         const getInput = document.getElementById(`${inputId}`);
 
-        if (eval(getTopWidth > getWidth)) {
+        if (getTopWidth > getWidth) {
           getInput.style.border = "2px solid red";
 
-          alert(`The${message} is too large.`);
+          getInput.value = topWidth;
+          setTimeout(() => {
+            alert(`The ${message} is too large.`);
 
-          getInput.value = defaultTopWidthValue;
+            getInput.style.border = "1px solid #8c8f94";
+            getInput.value = defaultValue;
+          }, 1000);
         } else {
           getInput.style.border = "1px solid #8c8f94";
         }
       }
 
-      validationTopWidthAndEdge(30, 30, "topWidth", defaultTopWidthValue);
+      validationTopWidthAndEdge(30, 40, "topWidth", 15, "top width");
 
       function vectorFun(length, bottomWidth, topWidth, edge) {
         // get default values
