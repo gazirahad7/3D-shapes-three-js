@@ -45,6 +45,8 @@
   <body>
     <div id="container"></div>
 
+    <input type="text" name="" id="topWidth" placeholder="Enter top width" />
+
     <script src="js/three.min.js"></script>
 
     <script>
@@ -133,6 +135,35 @@
       }
 
       //
+      let defaultTopWidthValue = Number(
+        document.querySelector("#top_width").defaultValue
+      );
+      function validationTopWidthAndEdge(
+        bottomWidth,
+        topWidth,
+        inputId,
+        defaultValue,
+        message
+      ) {
+        const getWidth = eval(bottomWidth) - 2;
+        const getTopWidth = eval(topWidth);
+
+        console.log({ getWidth, getTopWidth });
+
+        const getInput = document.getElementById(`${inputId}`);
+
+        if (eval(getTopWidth > getWidth)) {
+          getInput.style.border = "2px solid red";
+
+          alert(`The${message} is too large.`);
+
+          getInput.value = defaultTopWidthValue;
+        } else {
+          getInput.style.border = "1px solid #8c8f94";
+        }
+      }
+
+      validationTopWidthAndEdge(30, 30, "topWidth", defaultTopWidthValue);
 
       function vectorFun(length, bottomWidth, topWidth, edge) {
         // get default values
