@@ -146,23 +146,20 @@
         let bY = 0;
 
         let cX = length - getIncreaseLength; //  length
-        let cY = width - getIncreaseWidthVal;
-
-        let dX = width - getIncreaseWidthVal;
-        let dY = length - getIncreaseLength;
+        let cY = length;
 
         let A = new THREE.Vector2(-width + defaultWidth, 0);
         let B = new THREE.Vector2(bX, bY);
         let C = new THREE.Vector2(cX, cY);
-        let D = new THREE.Vector2(dX, dY + getIncreaseLength);
+        // let D = new THREE.Vector2(dX, dY + getIncreaseLength);
 
-        console.log({ A, B, C, D });
+        console.log({ A, B, C });
 
-        return [A, B, C, D];
+        return [A, B, C];
       }
 
       // Example usage
-      createPrism(30, 30, 30);
+      createPrism(30, 10, 40);
     </script>
   </body>
 </html>

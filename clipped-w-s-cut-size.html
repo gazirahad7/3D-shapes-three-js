@@ -156,9 +156,8 @@
           getInput.style.border = "2px solid red";
 
           getInput.value = topWidth;
+          alert(`The ${message} is too large.`);
           setTimeout(() => {
-            alert(`The ${message} is too large.`);
-
             getInput.style.border = "1px solid #8c8f94";
             getInput.value = defaultValue;
           }, 1000);

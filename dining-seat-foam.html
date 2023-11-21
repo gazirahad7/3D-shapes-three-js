@@ -37,6 +37,7 @@
         display: block;
         width: 550px !important;
         height: 550px !important;
+        border: 1px solid #000;
       }
     </style>
   </head>
@@ -70,7 +71,7 @@
       // Function to create the prism shape
       function createPrism(thickness, length, width, topWidth) {
         // Set up scene
-        AddCamera(-25, 40, 150);
+        AddCamera(-30, 70, 150);
         var scene = new THREE.Scene();
         setupLights(scene);
 
@@ -183,7 +184,7 @@
       }
 
       // Example usage
-      createPrism(30, 30, 30, 10);
+      createPrism(30, 30, 30, 30);
     </script>
 
     <script>
