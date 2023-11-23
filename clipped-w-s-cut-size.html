@@ -45,7 +45,7 @@
   <body>
     <div id="container"></div>
 
-    <input type="text" name="" id="topWidth" placeholder="Enter top width" />
+    <input type="number" name="" id="topWidth" placeholder="Enter top width" />
 
     <script src="js/three.min.js"></script>
 
@@ -145,28 +145,43 @@
         defaultValue,
         message
       ) {
-        const getWidth = eval(bottomWidth) - 2;
-        const getTopWidth = eval(topWidth);
+        const getWidth = eval(bottomWidth);
+        let getTopWidth = eval(topWidth);
+        // const getTopWidth =
+        //   eval(topWidth) - (eval(bottomWidth) > 7)
+        //     ? eval(topWidth) - 2
+        //     : eval(topWidth);
 
         console.log({ getWidth, getTopWidth });
+        let getInput = document.getElementById(`${inputId}`);
 
-        const getInput = document.getElementById(`${inputId}`);
+        //
+        // if (getTopWidth >= 8 && getWidth >= 8) {
+        //   getInput.value = getTopWidth - 2;
+        // }
+
+        const getFinalTopWidth =
+          getInput.value >= 8 && getWidth >= 8
+            ? getInput.value - 2
+            : getTopWidth;
+
+        console.log({ getFinalTopWidth });
 
         if (getTopWidth > getWidth) {
           getInput.style.border = "2px solid red";
 
-          getInput.value = topWidth;
+          getInput.value = getTopWidth;
+
+          console.log(getInput.value);
+
           alert(`The ${message} is too large.`);
-          setTimeout(() => {
-            getInput.style.border = "1px solid #8c8f94";
-            getInput.value = defaultValue;
-          }, 1000);
         } else {
           getInput.style.border = "1px solid #8c8f94";
+          getInput.value = getFinalTopWidth;
         }
       }
 
-      validationTopWidthAndEdge(30, 40, "topWidth", 15, "top width");
+      validationTopWidthAndEdge(8, 8, "topWidth", 15, "top width");
 
       function vectorFun(length, bottomWidth, topWidth, edge) {
         // get default values
@@ -215,6 +230,22 @@
         console.log({ A, B, C, D, E, F });
 
         return [A, B, C, D, E, F];
+      }
+    </script>
+
+    <script>
+      function adfa(bottomWidth, topWidth, inputId, defaultValue, message) {
+        const getWidth = eval(bottomWidth);
+        const getTopWidth = eval(topWidth);
+
+        if (getTopWidth > getWidth) {
+          getInput.style.border = "2px solid red";
+
+          getInput.value = topWidth;
+          alert(`The ${message} is too large.`);
+        } else {
+          getInput.style.border = "1px solid #8c8f94";
+        }
       }
     </script>
   </body>
