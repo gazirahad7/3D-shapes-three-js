@@ -156,10 +156,10 @@
         let defaultWidth = 30;
         let getIncreaseWidthVal = bottomWidth - defaultWidth;
 
-        let bX = bottomWidth || defaultWidth - getIncreaseWidthVal;
+        let bX = bottomWidth - getIncreaseWidthVal;
         let bY = 0;
 
-        let cX = bottomWidth;
+        let cX = bottomWidth - getIncreaseWidthVal;
         let cY = leftEdge;
 
         let dX = topWidth;
@@ -182,6 +182,7 @@
       }
 
       // Example usage
+      // createPrism(10, 30, 30, 20, 10, 20);
       createPrism(10, 30, 30, 20, 10, 20);
     </script>
   </body>
